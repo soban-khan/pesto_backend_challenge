@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { ProductController } from './product.controller';
+import { ProductService } from './product.service';
 import { JwtModule } from '@nestjs/jwt';
 import { APP_GUARD } from '@nestjs/core';
-import { AuthenticationGuard } from './authentication.guard';
+import { AuthenticationGuard } from './guards/authentication.guard';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ENV } from './app.constants';
+import { ENV } from './constants/app.constants';
 
 @Module({
   imports: [
@@ -21,13 +21,13 @@ import { ENV } from './app.constants';
       synchronize: true,
     }),
   ],
-  controllers: [AppController],
+  controllers: [ProductController],
   providers: [
-    AppService,
+    ProductService,
     {
       provide: APP_GUARD,
       useClass: AuthenticationGuard,
     },
   ],
 })
-export class AppModule {}
+export class ProductModule {}

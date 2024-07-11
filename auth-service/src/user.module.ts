@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { JwtModule } from '@nestjs/jwt';
+import { UserController } from './user.controller';
+import { UserService } from './user.service';
+import { JwtModule, JwtService } from '@nestjs/jwt';
 import { APP_GUARD } from '@nestjs/core';
-import { AuthenticationGuard } from './authentication.guard';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ENV } from './app.constants';
+import { ENV } from './constants/app.constants';
+import { User } from './user.entity';
+import { AuthenticationGuard } from './guards/authentication.guard';
 
 @Module({
   imports: [
@@ -20,14 +21,16 @@ import { ENV } from './app.constants';
       autoLoadEntities: true,
       synchronize: true,
     }),
+    TypeOrmModule.forFeature([User]),
   ],
-  controllers: [AppController],
+  controllers: [UserController],
   providers: [
-    AppService,
+    UserService,
+    JwtService,
     {
       provide: APP_GUARD,
       useClass: AuthenticationGuard,
     },
   ],
 })
-export class AppModule {}
+export class UserModule {}

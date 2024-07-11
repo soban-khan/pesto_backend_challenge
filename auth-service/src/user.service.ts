@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { ENV } from './app.constants';
+import { ENV } from './constants/app.constants';
 import { CreateUserDto } from './user.register.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
@@ -9,7 +9,7 @@ import * as bcrypt from 'bcrypt';
 import { LoginDto } from './login.dto';
 
 @Injectable()
-export class AppService {
+export class UserService {
   constructor(
     private readonly jwtService: JwtService,
     @InjectRepository(User) private readonly userRepository: Repository<User>,

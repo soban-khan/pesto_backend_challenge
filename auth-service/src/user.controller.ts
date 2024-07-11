@@ -1,21 +1,21 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { AppService } from './app.service';
-import { Public } from './public.decorator';
+import { UserService } from './user.service';
 import { CreateUserDto } from './user.register.dto';
 import { LoginDto } from './login.dto';
+import { Public } from './guards/public.decorator';
 
 @Controller()
-export class AppController {
-  constructor(private readonly appService: AppService) {}
+export class UserController {
+  constructor(private readonly userService: UserService) {}
 
   @Post('v1/users')
   registerUser(@Body() createUserDto: CreateUserDto) {
-    return this.appService.registerUser(createUserDto);
+    return this.userService.registerUser(createUserDto);
   }
 
   @Public()
   @Post('v1/login')
   login(@Body() loginDto: LoginDto) {
-    return this.appService.login(loginDto);
+    return this.userService.login(loginDto);
   }
 }

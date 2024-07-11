@@ -1,12 +1,12 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import { ENV } from './app.constants';
-import { ResponseInterceptor } from './response.interceptor';
+import { UserModule } from './user.module';
+import { ENV } from './constants/app.constants';
+import { ResponseInterceptor } from './interceptors/response.interceptor';
 import { ValidationPipe } from '@nestjs/common';
-import { HttpExceptionFilter } from './exception.interceptor';
+import { HttpExceptionFilter } from './interceptors/exception.interceptor';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(UserModule);
   app.useGlobalInterceptors(new ResponseInterceptor());
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalFilters(new HttpExceptionFilter());
