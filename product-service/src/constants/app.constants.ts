@@ -1,5 +1,5 @@
 export const ENV = {
-  PORT: 5000,
+  PORT: 4000,
   PSQL: {
     HOST: 'localhost',
     PORT: 5432,

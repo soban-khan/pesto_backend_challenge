@@ -6,6 +6,8 @@ import { APP_GUARD } from '@nestjs/core';
 import { AuthenticationGuard } from './guards/authentication.guard';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ENV } from './constants/app.constants';
+import { HttpModule } from '@nestjs/axios';
+import { Order, OrderItem } from './order.entity';
 
 @Module({
   imports: [
@@ -20,6 +22,8 @@ import { ENV } from './constants/app.constants';
       autoLoadEntities: true,
       synchronize: true,
     }),
+    TypeOrmModule.forFeature([Order, OrderItem]),
+    HttpModule,
   ],
   controllers: [OrderController],
   providers: [

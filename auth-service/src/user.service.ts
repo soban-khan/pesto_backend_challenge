@@ -32,6 +32,26 @@ export class UserService {
     }
   }
 
+  async getUser(id: string) {
+    try {
+      const product = await this.userRepository.findOne({
+        where: { id },
+      });
+      if (!product)
+        throw new HttpException('No Such Product', HttpStatus.NOT_FOUND);
+
+      return product;
+    } catch (error) {
+      if (error.status)
+        throw new HttpException(error.message, error.getStatus());
+      else
+        throw new HttpException(
+          error.message,
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        );
+    }
+  }
+
   async login(loginDto: LoginDto) {
     try {
       const { email, password } = loginDto;

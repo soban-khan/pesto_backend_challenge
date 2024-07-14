@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
 import { ProductController } from './product.controller';
-import { ProductService } from './product.service';
 import { JwtModule } from '@nestjs/jwt';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthenticationGuard } from './guards/authentication.guard';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ENV } from './constants/app.constants';
+import { ProductService } from './product.service';
+import { Product } from './product.entity';
 
 @Module({
   imports: [
@@ -20,6 +21,8 @@ import { ENV } from './constants/app.constants';
       autoLoadEntities: true,
       synchronize: true,
     }),
+    TypeOrmModule.forFeature([Product]),
+    ProductModule,
   ],
   controllers: [ProductController],
   providers: [
