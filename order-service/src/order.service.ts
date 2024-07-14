@@ -38,12 +38,25 @@ export class OrderService {
             },
           })
           .toPromise();
+        const sku = product.data.data.sku;
+        const data = JSON.stringify({
+          sku: sku - item.quantity,
+        });
         if (!product) {
           throw new HttpException(
             'Product not found',
             HttpStatus.FAILED_DEPENDENCY,
           );
         }
+        await this.httpService.patch(
+          `http://localhost:4000/v1/products/${item.productId}`,
+          {
+            headers: {
+              Authorization: req.headers['authorization'],
+            },
+            data: data,
+          },
+        );
         totalPrice += product.data.data.price * item.quantity;
       }
       const queryRunner = this.dataSource.createQueryRunner();
